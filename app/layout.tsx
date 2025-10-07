@@ -27,7 +27,7 @@ export default function RootLayout({
             <span className="text-md font-semibold text-gray-200">TOADO</span>
           </Link>
         </header>
-        <main className="px-3 py-4 text-gray-300">{children}</main>
+        {children}
       </body>
     </html>
   );
