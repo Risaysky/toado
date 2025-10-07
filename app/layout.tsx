@@ -27,7 +27,7 @@ export default function RootLayout({
             <span className="text-md font-semibold text-gray-200">TOADO</span>
           </Link>
         </header>
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
