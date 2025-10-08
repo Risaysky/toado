@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "./utils/supabase/server";
 
-export async function login(formData: FormData) {
+export async function login(_prevMessage: unknown, formData: FormData) {
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -16,15 +16,13 @@ export async function login(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    redirect("/error");
-  }
+  if (error) return error;
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
 }
 
-export async function signup(formData: FormData) {
+export async function signup(_prevMessage: unknown, formData: FormData) {
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -36,10 +34,14 @@ export async function signup(formData: FormData) {
 
   const { error } = await supabase.auth.signUp(data);
 
-  if (error) {
-    redirect("/error");
-  }
+  if (error) return error;
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/signup/confirm");
+}
+
+export async function signout() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+
+  redirect("/login");
 }

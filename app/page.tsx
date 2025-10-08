@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { HeroButton } from "./components/HeroButton";
+import HeroButton from "./components/HeroButton";
 import Link from "next/link";
 
 export default function Home() {
