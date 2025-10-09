@@ -1,6 +1,5 @@
 import Image from "next/image";
 import HeroButton from "./components/HeroButton";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -21,12 +20,8 @@ export default function Home() {
         </p>
       </div>
       <div className="flex flex-col items-center gap-3">
-        <Link href="/login">
-          <HeroButton>Login</HeroButton>
-        </Link>
-        <Link href="signup">
-          <HeroButton>Signup</HeroButton>
-        </Link>
+        <HeroButton path="/login">Login</HeroButton>
+        <HeroButton path="/signup">Signup</HeroButton>
       </div>
     </>
   );

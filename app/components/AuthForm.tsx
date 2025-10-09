@@ -2,14 +2,14 @@ import { useActionState, useState } from "react";
 import { login, signup } from "../actions";
 
 type authFormProps = {
-  type: "login" | "signup";
+  variant: "login" | "signup";
 };
 
-export default function AuthForm({ type }: authFormProps) {
+export default function AuthForm({ variant }: authFormProps) {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [state, formAction, isPending] = useActionState(
-    type === "login" ? login : signup,
+    variant === "login" ? login : signup,
     null,
   );
 
@@ -42,7 +42,7 @@ export default function AuthForm({ type }: authFormProps) {
         disabled={isPending}
         className="disabled:bg- rounded-lg bg-gray-300 px-3 py-1 text-gray-800 hover:cursor-pointer active:bg-gray-300/50 disabled:cursor-not-allowed disabled:bg-gray-300/50"
       >
-        {type === "login" ? "Login" : "Signup"}
+        {variant === "login" ? "Login" : "Signup"}
       </button>
       {state && (
         <span className="rounded-lg bg-pink-200 px-2 py-1 text-gray-700">

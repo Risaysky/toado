@@ -1,9 +1,14 @@
-type buttonProps = { children: React.ReactNode };
+import Link from "next/link";
 
-export default function HeroButton({ children }: buttonProps) {
+type buttonProps = { path: string; children: React.ReactNode };
+
+export default function HeroButton({ path, children }: buttonProps) {
   return (
-    <button className="min-w-40 rounded-md bg-gray-700 py-3 text-lg text-gray-300 transition-all hover:cursor-pointer active:bg-gray-700/50 active:text-gray-300/50">
+    <Link
+      href={path}
+      className="min-w-40 rounded-md bg-gray-700 py-3 text-center text-lg text-gray-300 transition-all hover:cursor-pointer active:bg-gray-700/50 active:text-gray-300/50"
+    >
       {children}
-    </button>
+    </Link>
   );
 }
