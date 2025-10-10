@@ -21,6 +21,7 @@ export default function AuthForm({ variant }: authFormProps) {
       <fieldset className="flex flex-col gap-3">
         <input
           required
+          autoComplete="on"
           name="email"
           className="rounded-lg bg-gray-200 px-2 py-1"
           type="email"
