@@ -35,7 +35,7 @@ export default async function RootLayout({
           </Link>
           {user && <LogoutButton />}
         </header>
-        <main>{children}</main>
+        <main className="text-gray-200">{children}</main>
       </body>
     </html>
   );
