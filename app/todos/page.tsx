@@ -1,5 +1,5 @@
 import TodoPreview from "../components/TodoPreview";
-import { createClient } from "../utils/supabase/server";
+import { createClient } from "../lib/supabase/server";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -7,7 +7,7 @@ export default async function Page() {
   return (
     <div className="grid grid-cols-1 gap-5 px-6 py-8">
       {data?.map((todo, index) => (
-        <TodoPreview key={index} title={todo.title} list={todo.list} />
+        <TodoPreview key={index} todo={todo} />
       ))}
     </div>
   );

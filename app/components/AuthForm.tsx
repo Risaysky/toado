@@ -1,5 +1,5 @@
 import { useActionState, useState } from "react";
-import { login, signup } from "../actions";
+import { login, signup } from "../lib/actions";
 
 type authFormProps = {
   variant: "login" | "signup";

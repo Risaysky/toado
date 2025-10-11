@@ -3,7 +3,7 @@ import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutButton from "./components/LogoutButton";
-import { createClient } from "./utils/supabase/server";
+import { createClient } from "./lib/supabase/server";
 
 const roboto = Roboto({
   subsets: ["latin"],

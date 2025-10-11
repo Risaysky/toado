@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "./utils/supabase/server";
+import { createClient } from "../lib/supabase/server";
 
 export async function login(_prevMessage: unknown, formData: FormData) {
   const supabase = await createClient();
@@ -18,8 +18,8 @@ export async function login(_prevMessage: unknown, formData: FormData) {
 
   if (error) return error;
 
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
+  revalidatePath("/todos");
+  redirect("/todos");
 }
 
 export async function signup(_prevMessage: unknown, formData: FormData) {
