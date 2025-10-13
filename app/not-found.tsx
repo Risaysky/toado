@@ -1,3 +1,3 @@
 export default function NotFound() {
-  return <div>Resource Not Found :/</div>;
+  return <div className="pt-32 text-center">Resource Not Found :/</div>;
 }

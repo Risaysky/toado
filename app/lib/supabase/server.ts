@@ -2,6 +2,15 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { Database } from "../database.types";
 
+export const createFetch =
+  (options: Pick<RequestInit, "next" | "cache">) =>
+  (url: RequestInfo | URL, init?: RequestInit) => {
+    return fetch(url, {
+      ...init,
+      ...options,
+    });
+  };
+
 export async function createClient() {
   const cookieStore = await cookies();
 
