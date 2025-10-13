@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Database } from "../lib/database.types";
 import TodoItem from "./TodoItem";
 
@@ -11,6 +9,13 @@ type todoEditorProps = {
 export default function TodoEditor({ todo }: todoEditorProps) {
   const [todoTitle, setTodoTitle] = useState(todo?.title);
   const [todoList, setTodoList] = useState(todo?.list);
+
+  useEffect(() => {
+    if (todo) {
+      setTodoTitle(todo.title);
+      setTodoList(todo.list);
+    }
+  }, [todo]);
 
   function handleText(text: string, index: number) {
     setTodoList((todoList) => {
