@@ -10,7 +10,7 @@ export default function TodoPreview({ todo }: todoPreviewProps) {
   const visibleList = todo.list.slice(0, 4);
 
   return (
-    <Link href={`/todos/${todo.uuid}`}>
+    <Link prefetch={true} href={`/todos/${todo.uuid}`}>
       <div className="overflow-clip rounded-xl border border-gray-700 hover:cursor-pointer active:opacity-45">
         <h2
           className={`bg-gray-700 ps-2 text-lg ${todo.title ? "text-gray-200" : "text-gray-400"} `}

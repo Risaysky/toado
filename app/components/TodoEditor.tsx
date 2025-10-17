@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Database } from "../lib/database.types";
 import TodoItem from "./TodoItem";

@@ -1,8 +1,7 @@
-"use client";
-import { createClient } from "./supabase/client";
+import { createClient } from "./supabase/server";
 
 export async function getTodos() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase.from("todos").select("*");
   return data;
 }

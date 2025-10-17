@@ -1,13 +1,20 @@
-"use client";
-
 import TodoPreview from "@/app/components/TodoPreview";
-import { useParams } from "next/navigation";
 import TodoEditor from "@/app/components/TodoEditor";
-import { useQuery } from "@tanstack/react-query";
 import { getTodos } from "@/app/lib/getTodos";
+import { createClient } from "@/app/lib/supabase/server";
+import { notFound, redirect } from "next/navigation";
 
-export default function Page({}) {
-  const { data: todos } = useQuery({ queryFn: getTodos, queryKey: ["todos"] });
+type pageProps = { params: Promise<{ todoId: string }> };
+
+export default async function Page({ params }: pageProps) {
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) redirect("/login");
+
+  const { todoId } = await params;
+  const todos = await getTodos();
   // const todos = [
   //   {
   //     created_at: "dfs",
@@ -17,7 +24,6 @@ export default function Page({}) {
   //     uuid: "dfs",
   //   },
   // ];
-  const { todoId } = useParams();
   const selectedTodo = todos?.find((todo) => todo.uuid === todoId?.[0]);
 
   if (!todoId) {
@@ -30,5 +36,9 @@ export default function Page({}) {
     );
   }
 
-  return <TodoEditor todo={selectedTodo} />;
+  if (selectedTodo) {
+    return <TodoEditor todo={selectedTodo} />;
+  }
+
+  notFound();
 }
