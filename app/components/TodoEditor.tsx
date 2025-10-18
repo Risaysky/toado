@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Database } from "../lib/database.types";
 import TodoItem from "./TodoItem";
 
@@ -11,13 +11,7 @@ type todoEditorProps = {
 export default function TodoEditor({ todo }: todoEditorProps) {
   const [todoTitle, setTodoTitle] = useState(todo?.title);
   const [todoList, setTodoList] = useState(todo?.list);
-
-  useEffect(() => {
-    if (todo) {
-      setTodoTitle(todo.title);
-      setTodoList(todo.list);
-    }
-  }, [todo]);
+  const ref = useRef<HTMLInputElement[]>([]);
 
   function handleText(text: string, index: number) {
     setTodoList((todoList) => {
@@ -42,6 +36,53 @@ export default function TodoEditor({ todo }: todoEditorProps) {
     });
   }
 
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (
+        e.key === "Enter" ||
+        e.key === "Tab" ||
+        e.key == "ArrowUp" ||
+        e.key === "ArrowDown" ||
+        e.key === "Backspace"
+      ) {
+        e.preventDefault();
+      }
+      const arr = ref.current;
+      const focused = arr.findIndex((element) => element === e.target);
+      if (
+        (e.key === "Enter" && !e.shiftKey && !e.ctrlKey) ||
+        (e.key === "Tab" && !e.shiftKey) ||
+        e.key === "ArrowDown"
+      ) {
+        const index = (focused + 1) % arr.length;
+        const inputLength = arr[index].value.length;
+        arr[index].focus();
+        arr[index].setSelectionRange(inputLength, inputLength);
+      }
+      if (
+        (e.key === "Enter" && e.shiftKey && !e.ctrlKey) ||
+        (e.key === "Tab" && e.shiftKey) ||
+        e.key === "ArrowUp"
+      ) {
+        const index =
+          (((focused > 0 ? focused - 1 : arr.length - 1) % arr.length) +
+            arr.length) %
+          arr.length;
+        const inputLength = arr[index].value.length;
+        arr[index].focus();
+        arr[index].setSelectionRange(inputLength, inputLength);
+      }
+      if (e.key === "Enter" && e.ctrlKey) {
+        if (focused >= 0) handleCheck(focused);
+      }
+      if (e.key === "Backspace" && e.ctrlKey) {
+        if (focused >= 0) removeItem(focused);
+      }
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
   return (
     <div className="px-5 pt-3">
       <input
@@ -53,6 +94,13 @@ export default function TodoEditor({ todo }: todoEditorProps) {
         {todoList?.map((item, index) => (
           <TodoItem
             key={index}
+            ref={(node) => {
+              const arr = ref.current;
+              arr[index] = node!;
+              return () => {
+                arr.splice(index, 1);
+              };
+            }}
             index={index}
             text={item.text}
             checked={item.done}

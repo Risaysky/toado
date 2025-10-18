@@ -15,15 +15,6 @@ export default async function Page({ params }: pageProps) {
 
   const { todoId } = await params;
   const todos = await getTodos();
-  // const todos = [
-  //   {
-  //     created_at: "dfs",
-  //     list: [{ text: "yuou", done: true }],
-  //     title: null,
-  //     user_id: "df",
-  //     uuid: "dfs",
-  //   },
-  // ];
   const selectedTodo = todos?.find((todo) => todo.uuid === todoId?.[0]);
 
   if (!todoId) {

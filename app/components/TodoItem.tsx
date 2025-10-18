@@ -1,4 +1,7 @@
+import { RefCallback } from "react";
+
 type todoItemProps = {
+  ref: RefCallback<HTMLInputElement>;
   index: number;
   text: string;
   checked: boolean;
@@ -8,6 +11,7 @@ type todoItemProps = {
 };
 
 export default function TodoItem({
+  ref,
   index,
   text,
   checked,
@@ -23,6 +27,7 @@ export default function TodoItem({
         onChange={() => onCheck(index)}
       />
       <input
+        ref={ref}
         className="field-sizing-content pe-2"
         type="text"
         value={text}
