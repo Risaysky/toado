@@ -19,7 +19,10 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_KEY!,
     {
       global: {
-        fetch: createFetch({ next: { revalidate: 60 }, cache: "force-cache" }),
+        fetch: createFetch({
+          next: { revalidate: 60, tags: ["supabase"] },
+          cache: "force-cache",
+        }),
       },
       cookies: {
         getAll() {

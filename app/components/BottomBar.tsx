@@ -1,4 +1,5 @@
 "use client";
+import { addTodo } from "../lib/addTodo";
 import Link from "next/link";
 
 export default function BottomBar() {
@@ -8,7 +9,12 @@ export default function BottomBar() {
         <Link className="cursor-pointer px-1 py-1" href={"/todos"}>
           🏠
         </Link>
-        <button className="cursor-pointer px-1 py-1" onClick={() => {}}>
+        <button
+          className="cursor-pointer px-1 py-1"
+          onClick={() => {
+            addTodo();
+          }}
+        >
           ➕
         </button>
       </div>
