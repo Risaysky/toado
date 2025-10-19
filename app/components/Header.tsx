@@ -24,7 +24,7 @@ export default function Header() {
   }, [path]);
 
   return (
-    <header className="flex h-14 items-center justify-between bg-gray-800 px-4 py-2 shadow-md">
+    <header className="sticky top-0 flex h-14 items-center justify-between bg-gray-800 px-4 py-2 shadow-md">
       <Link
         prefetch={true}
         className="flex items-center gap-2"

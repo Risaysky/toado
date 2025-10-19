@@ -43,7 +43,7 @@ export default function TodoEditor({ todo }: todoEditorProps) {
         e.key === "Tab" ||
         e.key == "ArrowUp" ||
         e.key === "ArrowDown" ||
-        e.key === "Backspace"
+        (e.key === "Backspace" && e.ctrlKey)
       ) {
         e.preventDefault();
       }
