@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { login, signup } from "../lib/actions";
+import { login, signup } from "../lib/authActions";
 
 type authFormProps = {
   variant: "login" | "signup";

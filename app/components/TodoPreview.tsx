@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Database } from "../lib/database.types";
-import { deleteTodo } from "../lib/deleteTodo";
+import { deleteTodo } from "../lib/todoActions";
 
 type todoPreviewProps = {
   todo: Database["public"]["Tables"]["todos"]["Row"];

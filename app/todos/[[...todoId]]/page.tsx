@@ -1,6 +1,6 @@
 import TodoPreview from "@/app/components/TodoPreview";
 import TodoEditor from "@/app/components/TodoEditor";
-import { getTodos } from "@/app/lib/getTodos";
+import { getTodos } from "@/app/lib/todoActions";
 import { createClient } from "@/app/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
 

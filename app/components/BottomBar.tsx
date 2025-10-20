@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { addTodo } from "../lib/addTodo";
-import { revalidateTodos } from "../lib/revalidateTodos";
+import { addTodo } from "../lib/todoActions";
+import { revalidateTodos } from "../lib/todoActions";
 import { ClipLoader } from "react-spinners";
 import { useTransition } from "react";
 
