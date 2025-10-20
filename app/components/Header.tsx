@@ -4,23 +4,19 @@ import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { createClient } from "../lib/supabase/client";
 import { Session } from "@supabase/supabase-js";
+import { checkSession } from "../lib/authActions";
 
 export default function Header() {
   const [session, setSession] = useState<Session | null>(null);
   const path = usePathname();
 
   useEffect(() => {
-    async function checkSession() {
-      const supabase = createClient();
-      const {
-        data: { session: sessionData },
-      } = await supabase.auth.getSession();
-      setSession(sessionData);
+    async function callback() {
+      const yo = await checkSession();
+      setSession(yo);
     }
-
-    checkSession();
+    callback();
   }, [path]);
 
   return (

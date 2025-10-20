@@ -45,3 +45,11 @@ export async function signout() {
 
   redirect("/");
 }
+
+export async function checkSession() {
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  return session;
+}
