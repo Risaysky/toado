@@ -25,11 +25,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 flex h-14 items-center justify-between bg-gray-800 px-4 py-2 shadow-md">
-      <Link
-        prefetch={true}
-        className="flex items-center gap-2"
-        href={session ? "/todos" : "/"}
-      >
+      <Link className="flex items-center gap-2" href={session ? "/todos" : "/"}>
         <Image
           className="h-[22px] w-[22px]"
           src="/toado.svg"
