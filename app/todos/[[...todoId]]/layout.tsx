@@ -1,4 +1,4 @@
-import BottomBar from "../components/BottomBar";
+import BottomBar from "../../components/BottomBar";
 
 export default function Layout({
   children,
