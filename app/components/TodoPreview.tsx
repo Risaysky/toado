@@ -2,12 +2,15 @@
 import Link from "next/link";
 import { Database } from "../lib/database.types";
 import { deleteTodo } from "../lib/todoActions";
+import { useTransition } from "react";
+import { ClipLoader } from "react-spinners";
 
 type todoPreviewProps = {
   todo: Database["public"]["Tables"]["todos"]["Row"];
 };
 
 export default function TodoPreview({ todo }: todoPreviewProps) {
+  const [isDeletePending, startDeleteTransition] = useTransition();
   const visibleList = todo.list.slice(0, 4);
 
   return (
@@ -20,13 +23,19 @@ export default function TodoPreview({ todo }: todoPreviewProps) {
             {todo.title ?? "Untitled"}
           </h2>
           <button
-            className="h-5 w-5 cursor-pointer rounded-3xl bg-gray-500 text-sm text-gray-700 active:bg-red-500"
+            className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-3xl bg-gray-500 text-sm text-gray-700 active:bg-red-500"
             onClick={(e) => {
               e.preventDefault();
-              deleteTodo(todo.uuid);
+              startDeleteTransition(() => {
+                deleteTodo(todo.uuid);
+              });
             }}
           >
-            x
+            {isDeletePending ? (
+              <ClipLoader color="#364153" size=".75rem" />
+            ) : (
+              "x"
+            )}
           </button>
         </div>
         <ul className="h-full bg-gray-800 py-3 ps-2">
