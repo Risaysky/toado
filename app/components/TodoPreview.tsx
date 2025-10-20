@@ -20,7 +20,7 @@ export default function TodoPreview({ todo }: todoPreviewProps) {
           <h2
             className={`text-lg ${todo.title ? "text-gray-200" : "text-gray-400"} `}
           >
-            {todo.title ?? "Untitled"}
+            {todo.title?.length ? todo.title : "Untitled"}
           </h2>
           <button
             className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-3xl bg-gray-500 text-sm text-gray-700 active:bg-red-500"

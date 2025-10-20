@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "./supabase/server";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { Database } from "./database.types";
 
 export async function addTodo() {
   const supabase = await createClient();
@@ -33,7 +34,19 @@ export async function getTodos() {
 
 export async function deleteTodo(uuid: string) {
   const supabase = await createClient();
-  const {} = await supabase.from("todos").delete().eq("uuid", uuid);
+  await supabase.from("todos").delete().eq("uuid", uuid);
+
+  revalidateTag("supabase");
+}
+
+export async function updateTodo(
+  todo: Database["public"]["Tables"]["todos"]["Update"],
+) {
+  const supabase = await createClient();
+  await supabase
+    .from("todos")
+    .update({ title: todo.title, list: todo.list })
+    .eq("uuid", todo.uuid as string);
 
   revalidateTag("supabase");
 }
