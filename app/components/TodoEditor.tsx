@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { Database } from "../lib/database.types";
 import TodoItem from "./TodoItem";
 import { updateTodo } from "../lib/todoActions";
+import { ClipLoader } from "react-spinners";
 
 type todoEditorProps = {
   todo?: Database["public"]["Tables"]["todos"]["Row"];
@@ -15,6 +16,7 @@ export default function TodoEditor({ todo }: todoEditorProps) {
     if (todo) return [...todo?.list, { text: "", done: false }];
   });
   const ref = useRef<HTMLInputElement[]>([]);
+  const [isUpdatePending, startUpdateTransition] = useTransition();
   const isChanged =
     JSON.stringify(todo?.title) === JSON.stringify(todoTitle) &&
     JSON.stringify(todo?.list) === JSON.stringify(todoList?.slice(0, -1));
@@ -108,17 +110,23 @@ export default function TodoEditor({ todo }: todoEditorProps) {
           className={`field-sizing-content pe-4 text-2xl text-gray-200 placeholder-gray-500`}
         />
         <button
-          className="text-md w-20 rounded-md bg-gray-700 py-1 text-gray-300 transition-all hover:cursor-pointer active:bg-gray-700/50 active:text-gray-300/50 disabled:bg-gray-800 disabled:text-gray-500"
+          className="w-20 cursor-pointer rounded-md bg-gray-700 py-1 text-gray-300 transition-all active:bg-gray-700/50 active:text-gray-300/50 disabled:cursor-default disabled:bg-gray-800 disabled:text-gray-500"
           disabled={isChanged}
           onClick={() =>
-            updateTodo({
-              ...todo,
-              title: todoTitle,
-              list: todoList?.slice(0, -1),
+            startUpdateTransition(() => {
+              updateTodo({
+                ...todo,
+                title: todoTitle,
+                list: todoList?.slice(0, -1),
+              });
             })
           }
         >
-          Save
+          {isUpdatePending ? (
+            <ClipLoader color="#d1d5dc" size=".75rem" />
+          ) : (
+            "Save"
+          )}
         </button>
       </div>
       <ul className="flex h-full flex-col items-start py-3">
